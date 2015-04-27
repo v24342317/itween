@@ -49,6 +49,7 @@
      <Compile Include="Assets\class1\HelloITween.cs" />
      <Compile Include="Assets\class1\HelloITween2.cs" />
      <Compile Include="Assets\class1\HelloITween3.cs" />
+     <Compile Include="Assets\class2\MakeGrid.cs" />
      <Compile Include="Assets\iTweenEditor\Examples\StartAndStopTween.cs" />
      <Compile Include="Assets\iTweenEditor\Helper Classes\EventParamMappings.cs" />
      <Compile Include="Assets\iTweenEditor\Helper Classes\Vector3OrTransform.cs" />
