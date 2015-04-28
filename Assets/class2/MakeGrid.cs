@@ -47,6 +47,7 @@ public class MakeGrid : MonoBehaviour {
     void tileMoveDown(GameObject obj) {
         iTween.MoveTo(obj, new Vector3(obj.transform.position.x, 0, obj.transform.position.z), 0.5f);
         setTileColor(obj,0.5f);
+        otherTile = null;
         //iTween.ColorTo(obj, otherTileColor, 0.5f);
     }
 
