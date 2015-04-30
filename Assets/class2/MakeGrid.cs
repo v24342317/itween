@@ -6,8 +6,14 @@ public class MakeGrid : MonoBehaviour {
     public int length=9;
     public int width=9;
     public GameObject tileObject=null;
-    private GameObject otherTile=null;
     public GameObject planCollider = null;
+
+    private GameObject otherTile=null;
+    private GameObject clickTile = null;
+    private bool isClick = false;
+   
+
+
     //private Color otherTileColor ;
 	// Use this for initialization
 	void Start () {
@@ -44,10 +50,12 @@ public class MakeGrid : MonoBehaviour {
         }
     }
 
-    void tileMoveDown(GameObject obj) {
+   public void tileMoveDown(GameObject obj) {
+       Debug.Log("MakeGrid.tileMoveDown()");
         iTween.MoveTo(obj, new Vector3(obj.transform.position.x, 0, obj.transform.position.z), 0.5f);
         setTileColor(obj,0.5f);
         otherTile = null;
+        isClick = false;
         //iTween.ColorTo(obj, otherTileColor, 0.5f);
     }
 
@@ -67,17 +75,31 @@ public class MakeGrid : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
        
+      
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if(Physics.Raycast(ray,out hit)){
+        if(Physics.Raycast(ray,out hit)&& !isClick){
 
             if (hit.transform.tag == "tile")
             {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Debug.Log("点击");
+                    clickTile = hit.transform.gameObject;
+                    tileMoveDown(clickTile);
+                    //isClick = true;
+                }
+
                 if ((otherTile != null) && (otherTile != hit.transform.gameObject))
                 {
                     tileMoveDown(otherTile);
                 }
-                tileMoveUp(hit.transform.gameObject);
+
+                if (clickTile != hit.transform.gameObject)
+                {
+                    tileMoveUp(hit.transform.gameObject);
+                }
+                
                
             }
 
