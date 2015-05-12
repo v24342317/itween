@@ -7,6 +7,7 @@ public class MakeGrid : MonoBehaviour {
     public int width=9;
     public GameObject tileObject=null;
     public GameObject planCollider = null;
+    public GameObject ball;
 
     private GameObject otherTile=null;
     private GameObject clickTile = null;
@@ -51,24 +52,35 @@ public class MakeGrid : MonoBehaviour {
     }
 
    public void tileMoveDown(GameObject obj) {
-       Debug.Log("MakeGrid.tileMoveDown()");
         iTween.MoveTo(obj, new Vector3(obj.transform.position.x, 0, obj.transform.position.z), 0.5f);
         setTileColor(obj,0.5f);
-        otherTile = null;
-        isClick = false;
+        //otherTile = null;
+        //isClick = false;
         //iTween.ColorTo(obj, otherTileColor, 0.5f);
     }
 
+   public void tileMoveDown(GameObject obj,Color color,float time)
+   {
+       iTween.MoveTo(obj, new Vector3(obj.transform.position.x, 0, obj.transform.position.z), 0.5f);
+       iTween.ColorTo(obj, color, time);
+       //otherTile = null;
+   }
+
     //设置颜色
-    void setTileColor(GameObject obj,float tiem) {
+    void setTileColor(GameObject obj,float time) {
         float val = obj.transform.position.x + obj.transform.position.z;
         if (val % 2 == 0)
         {
-            iTween.ColorTo(obj, Color.black, tiem);
+            iTween.ColorTo(obj, Color.black, time);
         }
         else {
-            iTween.ColorTo(obj, Color.white, tiem);
+            iTween.ColorTo(obj, Color.white, time);
         }
+    }
+
+    void Reset()
+    {
+        iTween.MoveTo(ball, iTween.Hash("z", clickTile.transform.position.z, "time", .5f));
     }
 
 	
@@ -84,13 +96,17 @@ public class MakeGrid : MonoBehaviour {
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-                    Debug.Log("点击");
+                    //Debug.Log("点击");
+                    if(clickTile!=null){
+                        setTileColor(clickTile,0.5f);
+                    }
                     clickTile = hit.transform.gameObject;
-                    tileMoveDown(clickTile);
+                    tileMoveDown(clickTile,Color.red,0.5f);
+                    iTween.MoveTo(ball, iTween.Hash("x", clickTile.transform.position.x, "time", .5f, "oncomplete", "Reset","oncompletetarget",gameObject));
                     //isClick = true;
                 }
 
-                if ((otherTile != null) && (otherTile != hit.transform.gameObject))
+                if ((otherTile != null) && (otherTile != hit.transform.gameObject)&&(otherTile!=clickTile))
                 {
                     tileMoveDown(otherTile);
                 }
