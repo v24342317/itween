@@ -35,8 +35,8 @@ public class CameraCsharp : MonoBehaviour {
                 paths[1] = new Vector3(planObj.transform.position.x / 2, 4f, planObj.transform.position.z/2);
                 paths[2] = new Vector3(planObj.transform.position.x, 0.5f, planObj.transform.position.z);
                 GameObject newBall=(GameObject)Instantiate(ball, new Vector3(0,0,0), Quaternion.identity);
-                iTween.MoveTo(newBall, iTween.Hash("path",paths,"movetopath",true,"orienttopath",false, "time", 1f, "easetype", iTween.EaseType.linear));
-                Destroy(newBall, 2f);
+                iTween.MoveTo(newBall, iTween.Hash("path",paths,"movetopath",true,"orienttopath",false, "time", 5f, "easetype", iTween.EaseType.linear));
+                //Destroy(newBall, 2f);
         }
 	}
 
